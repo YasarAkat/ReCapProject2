@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,49 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
+        IBrandDal _branDal;
+
+        public BrandManager(IBrandDal brandDal)
+        {
+            _branDal = brandDal;
+        }
         public void Add(Brand brand)
         {
-            throw new NotImplementedException();
+            if (brand.BrandName.Length < 2)
+            {
+                Console.WriteLine("The Car Name must have minimum 2 character.");
+            }
+            else 
+            {
+                _branDal.Add(brand);
+            }
         }
 
         public void Delete(Brand brand)
         {
-            throw new NotImplementedException();
+            _branDal.Delete(brand);
         }
 
         public List<Brand> GetAll()
         {
-            throw new NotImplementedException();
+            return _branDal.GetAll();
+        }
+
+        public Brand GetById(int BrandId)
+        {
+            return _branDal.Get(b => b.BrandId == BrandId);
         }
 
         public void Update(Brand brand)
         {
-            throw new NotImplementedException();
+            if (brand.BrandName.Length < 2)
+            {
+                Console.WriteLine("The Car Name must have minimum 2 character.");
+            }
+            else
+            {
+                _branDal.Add(brand);
+            }
         }
     }
 }

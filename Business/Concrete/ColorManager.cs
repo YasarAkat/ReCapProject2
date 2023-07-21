@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,44 @@ namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
+        IColorDal _colorDal;
         public void Add(Color color)
         {
-            throw new NotImplementedException();
+            if (color.ColorName.Length < 2)
+            {
+                Console.WriteLine("The Car Name must have minimum 2 character.");
+            }
+            else
+            {
+                _colorDal.Add(color);
+            }
         }
 
         public void Delete(Color color)
         {
-            throw new NotImplementedException();
+            _colorDal.Delete(color);
         }
 
         public List<Color> GetAll()
         {
-            throw new NotImplementedException();
+           return  _colorDal.GetAll();
+        }
+
+        public Color GetById(int ColorId)
+        {
+            return _colorDal.Get(c => c.ColorId == ColorId);
         }
 
         public void Update(Color color)
         {
-            throw new NotImplementedException();
+            if (color.ColorName.Length < 2)
+            {
+                Console.WriteLine("The Car Name must have minimum 2 character.");
+            }
+            else
+            {
+                _colorDal.Add(color);
+            }
         }
     }
 }
