@@ -9,6 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface ICarDal : IEntityRepository<Car>
     {
-        Car GetById(Func<object, bool> p);
+        Car GetById(int id);
     }
 }

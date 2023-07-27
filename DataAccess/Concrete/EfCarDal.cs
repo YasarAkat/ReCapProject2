@@ -48,6 +48,14 @@ namespace DataAccess.Concrete
             }
         }
 
+        public Car GetById(int id)
+        {
+            using (ReCapContext context = new ReCapContext())
+            {
+                return context.Cars.SingleOrDefault(p => p.CarId == id);
+            }
+        }
+
         public void Update(Car entity)
         {
             using (ReCapContext context = new ReCapContext())

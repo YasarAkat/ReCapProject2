@@ -31,6 +31,11 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
+        public Brand GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Brand entity)
         {
             throw new NotImplementedException();

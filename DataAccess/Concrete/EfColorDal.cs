@@ -31,6 +31,11 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
+        public Color GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Color entity)
         {
             throw new NotImplementedException();
