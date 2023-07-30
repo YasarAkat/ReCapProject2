@@ -29,7 +29,7 @@ namespace Business.Concrete
             }
             else if (car.DailyPrice <= 0)
             {
-                return new ErrorResult(Messages.CarPriceInvalid);
+                return new ErrorResult(Messages.CarPriceIsNegative);
             }
             else
             {
@@ -77,7 +77,7 @@ namespace Business.Concrete
             }
             else if (car.DailyPrice <= 0)
             {
-                return new ErrorResult(Messages.CarPriceInvalid);
+                return new ErrorResult(Messages.CarPriceIsNegative);
             }
             else
             {

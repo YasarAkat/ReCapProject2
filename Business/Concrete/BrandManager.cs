@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilites.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -17,42 +19,46 @@ namespace Business.Concrete
         {
             _branDal = brandDal;
         }
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
             if (brand.BrandName.Length < 2)
             {
-                Console.WriteLine("The Car Name must have minimum 2 character.");
+                return new ErrorResult(Messages.BrandNameInvalid);
             }
             else 
             {
                 _branDal.Add(brand);
+                return new SuccessResult(Messages.BrandAdded);
             }
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _branDal.Delete(brand);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _branDal.GetAll();
+            return new DataResult<List<Brand>>(_branDal.GetAll(),true);
+           
         }
 
-        public Brand GetById(int BrandId)
+        public IDataResult<Brand> GetById(int BrandId)
         {
-            return _branDal.Get(b => b.BrandId == BrandId);
+            return new DataResult<Brand>(_branDal.Get(b => b.BrandId == BrandId),true);
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             if (brand.BrandName.Length < 2)
             {
-                Console.WriteLine("The Car Name must have minimum 2 character.");
+                return new ErrorResult(Messages.BrandNameInvalid);
             }
             else
             {
                 _branDal.Add(brand);
+                return new SuccessResult(Messages.BrandUpdated);
             }
         }
     }
