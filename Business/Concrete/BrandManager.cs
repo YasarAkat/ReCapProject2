@@ -57,7 +57,7 @@ namespace Business.Concrete
             }
             else
             {
-                _branDal.Add(brand);
+                _branDal.Update(brand);
                 return new SuccessResult(Messages.BrandUpdated);
             }
         }

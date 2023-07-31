@@ -13,9 +13,12 @@ namespace ConsolUI
 
             CarManager carManager = new CarManager(new EfCarDal());
 
-            DTOTest(carManager);
+            //DTOTest(carManager);
 
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //RentAlDtoTest(rentalManager);
 
+            //RentalAdd(rentalManager);
             //Console.WriteLine(carManager.GetById(10).CarName);
             //DeleteTest(carManager);
             //UpdateTest(carManager);
@@ -23,10 +26,36 @@ namespace ConsolUI
 
         }
 
+        private static void RentAlDtoTest(RentalManager rentalManager)
+        {
+            var result = rentalManager.GetRentalDetails();
+            if (result.Success)
+            {
+                foreach (var rental in result.Data)
+                {
+                    Console.WriteLine
+                        ($"Araba:{rental.CarName} / Günlük Fiyat:{rental.DailyPrice}" +
+                        $" / Adı ve Soyadı:{rental.FirstName + " " + rental.LastName}" +
+                        $" / Email:{rental.Email} / Şirket:{rental.CompanyName} "
+                        );
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalAdd(RentalManager rentalManager)
+        {
+            rentalManager.Add(new Rental { RentalId = 5, CarId = 1, CustomerId = 1, RentDate = new DateTime(2023, 09, 01), ReturnDate = new DateTime(2023, 09, 05) });
+            rentalManager.Add(new Rental { RentalId = 6, CarId = 3, CustomerId = 2, RentDate = new DateTime(2023, 09, 10), ReturnDate = new DateTime(2023, 09, 15) });
+        }
+
         private static void DTOTest(CarManager carManager)
         {
             var result = carManager.GetCarDetails();
-            if (result.Success==true)
+            if (result.Success)
             {
                 foreach (var car in result.Data)
                 {
@@ -41,10 +70,16 @@ namespace ConsolUI
             carManager.Add(new Car { CarId = 3, BrandId = 3, ColorId = 2, CarName = "320D", DailyPrice = 1500, ModelYear = "2021", Description = "Konforlu araba" });
             carManager.Add(new Car { CarId = 4, BrandId = 2, ColorId = 4, CarName = "A5 Coupe", DailyPrice = 1000, ModelYear = "2020", Description = "Uygun araba" });
             carManager.Add(new Car { CarId = 10, BrandId = 3, ColorId = 2, CarName = "Daıhatsu", DailyPrice = 800, ModelYear = "2018", Description = "Ekonomik Araba" });
-            foreach (var car in carManager.GetAll())
+
+            var result = carManager.GetAll();
+            if (result.Success)
             {
-                Console.WriteLine($"Model: {car.CarName} Marka: {car.BrandId} Renk: {car.ColorId} Günlük Fiyat: {car.DailyPrice} Açıklama: {car.Description}");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"Model: {car.CarName} Marka: {car.BrandId} Renk: {car.ColorId} Günlük Fiyat: {car.DailyPrice} Açıklama: {car.Description}");
+                }
             }
+            
         }
 
         private static void UpdateTest(CarManager carManager)
