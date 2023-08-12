@@ -81,7 +81,7 @@ namespace Business.Concrete
             }
             else
             {
-                _carDal.Add(car);
+                _carDal.Update(car);
                 return new SuccessResult(Messages.CarUpdated);
             }
         }

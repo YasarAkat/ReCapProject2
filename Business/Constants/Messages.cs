@@ -31,5 +31,21 @@ namespace Business.Constants
 
         //RENTAL MESSAGES
         public static string CarNotReturn = "İstediğiniz araç henüz teslim edilmemiş";
+        public static string RentalAdded = "Araç Kiralandı";
+        public static string RentalUpdated = "Araç bilgileri güncellendi";
+        public static string RentalDeleted = "Araç teslim edildi";
+
+        //CUSTOMER MESSAGES
+        public static string CustomerAdded = "Müşteri eklendi";
+        public static string CustomerDeleted = "Müşteri silindi";
+        public static string CustomerUpdated = "Müşteri güncellendi";
+
+        //USER MESSAGES
+        public static string UserAdded = "Kullanıcı eklendi";
+        public static string UserDeleted = "Kullanıcı silindi";
+        public static string UserUpdated = "Kullanıcı güncellendi";
+        public static string UserNameInvalid = "Renk adı en az iki karakterden oluşmalı";
+        public static string UserGetAll = "Tüm kullanıcılar listelendi";
+
     }
 }

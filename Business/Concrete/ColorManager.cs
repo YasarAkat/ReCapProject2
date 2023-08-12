@@ -14,6 +14,12 @@ namespace Business.Concrete
     public class ColorManager : IColorService
     {
         IColorDal _colorDal;
+
+        public ColorManager(IColorDal colorDal)
+        {
+            _colorDal = colorDal;
+        }
+
         public IResult Add(Color color)
         {
             if (color.ColorName.Length < 2)
@@ -51,8 +57,8 @@ namespace Business.Concrete
             }
             else
             {
-                _colorDal.Add(color);
-                return new SuccessResult(Messages.ColorAdded);
+                _colorDal.Update(color);
+                return new SuccessResult(Messages.ColorUpdated);
             }
         }
     }
