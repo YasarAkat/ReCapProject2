@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilites.Result;
 using DataAccess.Abstract;
@@ -22,11 +23,10 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-
-            ValidationTool.Validate(new RentalValidator(), rental);
-
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -52,11 +52,9 @@ namespace Business.Concrete
             return new DataResult<List<RentalDto>>(_rentalDal.GetRentalDetails(),true);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
-
-            ValidationTool.Validate(new RentalValidator(), rental);
-
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
