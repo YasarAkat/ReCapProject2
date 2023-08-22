@@ -38,7 +38,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetAll()
         {
-            return new DataResult<List<Brand>>(_branDal.GetAll(),true);
+            return new SuccessDataResult<List<Brand>>(_branDal.GetAll());
            
         }
 

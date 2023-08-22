@@ -47,5 +47,13 @@ namespace Business.Constants
         public static string UserNameInvalid = "Renk adı en az iki karakterden oluşmalı";
         public static string UserGetAll = "Tüm kullanıcılar listelendi";
 
+        //CARIMAGES MESSAGES
+        public static string CarImageLimitReached= "Resim ekleme sınırı daha fazla resim ekleyemezsiniz";
+        public static string CarImageAlreadyHave = "Araba zaten mevcut";
+        public static string CarImageAdded = "Resim eklendi";
+        public static string CarImageDeleted = "Resim silindi";
+        public static string ImagesListed = "Resimler listelendi";
+        public static string ImageUpdated = "Resim güncellendi";
+        public static string ImagesListedByCarId = "Resim Id'ye gör listelendi";
     }
 }

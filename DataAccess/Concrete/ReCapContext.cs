@@ -14,6 +14,8 @@ namespace DataAccess.Concrete
         {
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\\mssqllocaldb;Database=ReCap;Trusted_Connection=true");
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;database=recap;trusted_connection=true");
+
+            AppContext.SetSwitch("SqlServer.EnableLegacyTimeStampBehavior", true);
         }
 
         public DbSet<Car> Cars { get; set; }
@@ -22,5 +24,6 @@ namespace DataAccess.Concrete
         public DbSet<Customer> Customers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Rental> Rentals { get; set; }
+        public DbSet<CarImage> CarImages { get; set; }
     }
 }
