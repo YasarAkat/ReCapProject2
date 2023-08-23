@@ -54,6 +54,6 @@ namespace Business.Constants
         public static string CarImageDeleted = "Resim silindi";
         public static string ImagesListed = "Resimler listelendi";
         public static string ImageUpdated = "Resim güncellendi";
-        public static string ImagesListedByCarId = "Resim Id'ye gör listelendi";
+        public static string ImagesListedByCarId = "Resim Id'ye göre listelendi";
     }
 }

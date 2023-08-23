@@ -15,34 +15,38 @@ namespace Core.Utilites.Helpers.FileHelper
         public string Upload(IFormFile file, string root)
         {
             //Dosya Uzunluğu 0 ise boş değeri döndür
-            
-            if (file.Length > 0)
+
+            if (file!=null)
             {
-                //.jpeg olup olmadığını kontrol ediyor, yolu oluşturacak.
-                if (!Directory.Exists(root))
+                if (file.Length > 0)
                 {
-                    
-                    Directory.CreateDirectory(root);
+                    //.jpeg olup olmadığını kontrol ediyor, yolu oluşturacak.
+                    if (!Directory.Exists(root))
+                    {
+
+                        Directory.CreateDirectory(root);
+                    }
+                    //uzantı, uzantı değişkenleri dosya adı olarak tanımlanır
+                    string extension = Path.GetExtension(file.FileName);
+
+                    //oluşturduğumuz rastgele dosya yolunun sistemi hangi yönde kullanacağı bu şekilde safe.ve guid için jpeg de bu rasgele sayılar tanımlandı.
+                    string guid = GuideHelper.GuidHelper.CreateGuid();
+                    //daha sonra filepath, toplam ad ve hangi yol olarak tanımlandı
+                    string filePath = guid + extension;
+
+                    //IDısposable pattern ile oluşturulan root ve filepath
+                    //bu, bunu yaptıktan sonra çöp toplayıcı ile silineceği anlamına gelir
+                    using (FileStream fileStream = File.Create(root + filePath))
+                    {
+
+                        file.CopyTo(fileStream);
+
+                        fileStream.Flush();
+
+                        return filePath;
+                    }
                 }
-                //uzantı, uzantı değişkenleri dosya adı olarak tanımlanır
-                string extension = Path.GetExtension(file.FileName);
-
-                //oluşturduğumuz rastgele dosya yolunun sistemi hangi yönde kullanacağı bu şekilde safe.ve guid için jpeg de bu rasgele sayılar tanımlandı.
-                string guid = GuideHelper.GuidHelper.CreateGuid();
-                //daha sonra filepath, toplam ad ve hangi yol olarak tanımlandı
-                string filePath = guid + extension;
-
-                //IDısposable pattern ile oluşturulan root ve filepath
-                //bu, bunu yaptıktan sonra çöp toplayıcı ile silineceği anlamına gelir
-                using (FileStream fileStream = File.Create(root + filePath))
-                {
-                    
-                    file.CopyTo(fileStream);
-                    
-                    fileStream.Flush();
-
-                    return filePath;
-                }
+                
             }
             return null;
         }
