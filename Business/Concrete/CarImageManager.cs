@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilites.Business;
 using Core.Utilites.Helpers.FileHelper;
 using Core.Utilites.Result;
@@ -25,17 +27,17 @@ namespace Business.Concrete
             _fileHelperService = fileHelperService;
         }
 
-        
+        [ValidationAspect(typeof(CarImageValidator))]
         public IResult Add(IFormFile file, CarImage carImage)
         {
-            IResult result = BusinessRules.Run(CheckForCarImageLimit(carImage.CarId));
+            IResult result = BusinessRules.Run(CheckForCarImageLimit(carImage.CarId)); // 5 ten fazla araba resmi eklenemez.
             if (result != null)
             {
                 return result;
             }
 
-            carImage.ImagePath = _fileHelperService.Upload(file, PathConstants.CarImagesPath);
-            carImage.Date = DateTime.Now;
+            carImage.ImagePath = _fileHelperService.Upload(file, PathConstants.CarImagesPath); //dosya ve dosya yolu
+            carImage.Date = DateTime.Now; // şu anki zaman
 
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageAdded);
@@ -45,7 +47,7 @@ namespace Business.Concrete
      
         public IResult Delete(CarImage carImage)
         {
-            _fileHelperService.Delete(PathConstants.CarImagesPath + carImage.ImagePath);
+            _fileHelperService.Delete(PathConstants.CarImagesPath + carImage.ImagePath); //resim yolu ve dosya yolu
 
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
@@ -64,15 +66,16 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetByCarId(int CarId)
         {
-            IResult result = BusinessRules.Run(CheckImageExists(CarId));
+            IResult result = BusinessRules.Run(CheckImageExists(CarId));//Dosya var mı yok mu onun kontrolü
             if (result != null)
             {
-                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(CarId).Data);
+                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(CarId).Data); //resim eklenmediği zaman default eklenecek resim
             }
 
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == CarId), Messages.ImagesListedByCarId);
         }
 
+        [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             
@@ -88,7 +91,7 @@ namespace Business.Concrete
         private IResult CheckForCarImageLimit(int carId)
         {
             var result = _carImageDal.GetAll(i => i.CarId == carId).Count;
-            if(result > 5)
+            if(result >= 5)
             {
                 return new ErrorResult(Messages.CarImageLimitReached);
             }

@@ -9,8 +9,8 @@ namespace Core.Utilites.Helpers.FileHelper
 {
     public interface IFileHelperService
     {
-        string Upload(IFormFile file, string root);
-        void Delete(string filePath);
-        string Update(IFormFile file, string filePath, string root);
+        string Upload(IFormFile file, string root);//Dosya ve uzantısı
+        void Delete(string filePath); // filepath:Dosya yolu
+        string Update(IFormFile file, string filePath, string root);//dosya - dosya yolu ve uzantısı
     }
 }

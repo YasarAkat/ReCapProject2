@@ -41,9 +41,9 @@ namespace Core.Utilites.Helpers.FileHelper
 
                         file.CopyTo(fileStream);
 
-                        fileStream.Flush();
+                        fileStream.Flush();//Flush: Ara belleği temizler ve ara belleğe alınan verileri dosyaya kaydeder.
 
-                        return filePath;
+                        return filePath;//Son olarak dosya yolunu bize döner.
                     }
                 }
                 
@@ -52,7 +52,7 @@ namespace Core.Utilites.Helpers.FileHelper
         }
         //dosya yolu ICarImageManager'dan geliyor
         public void Delete(string filePath)
-        {//filepath yolu aynı dosyaya sahipse filePath'i silebiliriz
+        {//öncelikle dosyanın var olup olmadığını kontrol ediyoruz, filepath yolu aynı dosyaya sahipse filePath'i silebiliriz
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
